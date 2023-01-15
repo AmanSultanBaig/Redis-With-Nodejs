@@ -10,22 +10,29 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(cors())
 
-const redisClient = redis.createClient();
+let redisClient;
+let results; 
+
+(async () => {
+    redisClient = redis.createClient();
+    redisClient.on("error", (error) => console.error(`Error : ${error}`));
+
+    await redisClient.connect();
+})();
 
 let port = process.env.PORT || 3000;
 
 app.get('/photos', async (req, res) => {
     try {
-        await redisClient.connect();
-        const data = await redisClient.get('photos');
-        if (data) {
-            res.send(JSON.parse(data))
-            await redisClient.disconnect();
+        const cacheResults = await redisClient.get("photos");
+        if (cacheResults) {
+            results = JSON.parse(cacheResults);
         } else {
             const { data } = await axios.get(`${process.env.BASE_URL}/photos`);
+            results = data;
             redisClient.setEx("photos", EXPIRATION_TIME, JSON.stringify(data))
-            res.send(data)
         }
+        res.send(results)
     } catch (error) {
         console.log(error)
     }

@@ -1,0 +1,24 @@
+{
+  "name": "redis-with-nodejs",
+  "version": "1.0.0",
+  "description": "Redis cacheing practice with nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AmanSultanBaig/Redis-With-Nodejs.git"
+  },
+  "author": "Aman Sultan Baig",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AmanSultanBaig/Redis-With-Nodejs/issues"
+  },
+  "homepage": "https://github.com/AmanSultanBaig/Redis-With-Nodejs#readme",
+  "dependencies": {
+    "axios": "^1.2.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}
